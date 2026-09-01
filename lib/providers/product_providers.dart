@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../models/product.dart';
- import 'package:flutter_riverpod/legacy.dart';
 import '../repositories/product_repository.dart';
 import 'sort_option.dart';
 
@@ -26,7 +26,7 @@ final sortOptionProvider = StateProvider<SortOption>((ref) => SortOption.nameAsc
 final searchQueryProvider = StateProvider<String>((ref) => '');
 
 /// Provider dérivé : applique recherche + filtre + tri sur les produits chargés,
-/// tout en conservant l'AsyncValue (via whenData) pour gérer loading/erreur dans l'UI.
+/// tout en conservant l'`AsyncValue` (via whenData) pour gérer loading/erreur dans l'UI.
 final filteredProductsProvider = Provider<AsyncValue<List<Product>>>((ref) {
   final productsAsync = ref.watch(productsProvider);
   final category = ref.watch(categoryFilterProvider);

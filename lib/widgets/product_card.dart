@@ -46,7 +46,7 @@ class ProductCard extends ConsumerWidget {
                       left: 6,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                        decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.6), borderRadius: BorderRadius.circular(6)),
+                        decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.7), borderRadius: BorderRadius.circular(6)),
                         child: const Text('Rupture', style: TextStyle(color: Colors.white, fontSize: 11)),
                       ),
                     ),

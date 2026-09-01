@@ -21,6 +21,7 @@ class FavoritesScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text('Mes favoris')),
       body: AsyncValueWidget<List<Product>>(
         value: productsAsync,
+        onRetry: () => ref.invalidate(productsProvider),
         data: (products) {
           final favorites = products.where((p) => favoriteIds.contains(p.id)).toList();
           if (favorites.isEmpty) {

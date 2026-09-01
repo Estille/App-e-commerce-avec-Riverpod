@@ -73,29 +73,33 @@ class ProductListScreen extends ConsumerWidget {
           Expanded(
             child: AsyncValueWidget<List<Product>>(
               value: filteredAsync,
+              onRetry: () => ref.invalidate(productsProvider),
               data: (products) {
                 if (products.isEmpty) {
                   return const EmptyState(message: 'Aucun produit ne correspond à ta recherche.');
                 }
-                return GridView.builder(
-                  padding: const EdgeInsets.all(16),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 0.68,
+                return RefreshIndicator(
+                  onRefresh: () => ref.refresh(productsProvider.future),
+                  child: GridView.builder(
+                    padding: const EdgeInsets.all(16),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      childAspectRatio: 0.68,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      return ProductCard(
+                        product: product,
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => ProductDetailScreen(product: product)),
+                        ),
+                      );
+                    },
                   ),
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    final product = products[index];
-                    return ProductCard(
-                      product: product,
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => ProductDetailScreen(product: product)),
-                      ),
-                    );
-                  },
                 );
               },
             ),
